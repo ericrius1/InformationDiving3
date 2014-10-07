@@ -1,0 +1,1 @@
+G.rf = THREE.Math.randFloat;

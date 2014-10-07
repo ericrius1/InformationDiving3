@@ -8,6 +8,7 @@ var parameters = (function() {
   return parameters;
 })();
 
+G.loader = new Loader();
 var controls, effect;
 
 var controls2, clock = new THREE.Clock();
@@ -19,7 +20,15 @@ var cameraPath;
 G.primitives = {}
 
 G.shaders = new ShaderLoader('shaders')
-G.loader = new Loader();
+
+
+G.loader.addLoad()
+G.shaders.load('vs-strand', 'strand', 'vertex');
+G.shaders.load('fs-strand', 'strand', 'fragment');
+
+G.shaders.shaderSetLoaded = function(){
+  G.loader.onLoad();
+}
 var c4dLoader = new THREE.C4DLineLoader();
 G.loader.addLoad();
 c4dLoader.load('models/campath-3.txt', function(line) {
@@ -44,7 +53,6 @@ objLoader.load('models/ID-scene-2.json', function(sceneObj) {
 G.loader.addLoad();
 $.get('models/sampleData.json', function(data){
   G.primitiveData = data;
-  console.log(data)
   G.loader.onLoad();
 })
 
@@ -104,7 +112,11 @@ G.init = function() {
 }
 G.createPrimitives = function(){
   G.primitives['arc'] = new G.Arc();
-  G.primitives['arc'].spawn()
+  _.each(G.primitiveData, function(data, name){
+    if(G.primitives[name]){
+      G.primitives[name].init(data.numClones, data.position, data.sizeRange);
+    }
+  })
 }
 
 G.onResize = function() {

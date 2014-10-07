@@ -23,6 +23,6 @@ G.Primitive.prototype = {
 //arg 1: num clones to create
 //arg 2: size range to randomize by
 //arg 3: spawn point to randomize position around
-G.Primitive.prototype.spawn = function(num, sizeRange, spawnPoint){
-  
+G.Primitive.prototype.init = function(num, sizeRange, spawnPoint){
+
 }
