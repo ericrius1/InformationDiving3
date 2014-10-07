@@ -1,4 +1,5 @@
 G.Primitive = function() {
+  this.effectors = [];
   this._colorPalette = [0xEF2D5E, 0xFCED49, 0x1BA0D1, 0xA00B5F, 0x93B75E];
   this._materials = []
   this._spawnInterval = 100;
@@ -32,3 +33,5 @@ G.Primitive.prototype.init = function(numClones, posData, sizeRange){
     this.create(position, sizeRange);
   }
 }
+
+
