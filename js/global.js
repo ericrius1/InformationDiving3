@@ -16,6 +16,8 @@ var sky, water;
 
 var cameraPath;
 
+G.primitives = {}
+
 G.shaders = new ShaderLoader('shaders')
 G.loader = new Loader();
 var c4dLoader = new THREE.C4DLineLoader();
@@ -26,7 +28,20 @@ c4dLoader.load('models/campath-3.txt', function(line) {
 
 });
 
-G.loader.onStart = function(){
+var objLoader = new THREE.ObjectLoader();
+G.loader.addLoad();
+objLoader.load('models/ID-scene-2.json', function(sceneObj) {
+
+  G.sceneObj = sceneObj;
+  G.loader.onLoad();
+  surface = sceneObj.getObjectByName('surface', true)
+  surface.children[0].material.wireframe = true;
+  surface.children[0].material.transparent = true;
+  surface.children[0].material.opacity = 0.2;
+
+});
+
+G.loader.onStart = function() {
   this.init();
   this.animate();
 }.bind(G)
@@ -36,7 +51,7 @@ VRClient.ready().then(function() {
 });
 
 G.init = function() {
-
+  this.createPrimitives();
   G.renderer = new THREE.WebGLRenderer({
     antialias: true
   });
@@ -74,19 +89,14 @@ G.init = function() {
   });
 
 
-  var objLoader = new THREE.ObjectLoader();
-  objLoader.load('models/ID-scene-2.json', function(object) {
 
-    G.scene.add(object);
-
-    surface = object.getObjectByName('surface', true)
-    surface.children[0].material.wireframe = true;
-    surface.children[0].material.transparent = true;
-    surface.children[0].material.opacity = 0.2;
-
-  });
+  G.scene.add(G.sceneObj);
 
 
+
+}
+G.createPrimitives = function(){
+  G.primitives['arc'] = new G.Arc();
 }
 
 G.onResize = function() {

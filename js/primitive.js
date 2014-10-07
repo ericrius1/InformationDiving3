@@ -16,7 +16,13 @@ G.Primitive = function() {
 
 G.Primitive.prototype = {
   constructor: G.Primitive,
-  spawn: function() {},
   unspawn: function() {},
   update: function() {}
 };
+
+//arg 1: num clones to create
+//arg 2: size range to randomize by
+//arg 3: spawn point to randomize position around
+G.Primitive.prototype.spawn = function(num, sizeRange, spawnPoint){
+  
+}
