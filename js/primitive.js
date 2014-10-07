@@ -23,6 +23,12 @@ G.Primitive.prototype = {
 //arg 1: num clones to create
 //arg 2: size range to randomize by
 //arg 3: spawn point to randomize position around
-G.Primitive.prototype.init = function(num, sizeRange, spawnPoint){
-
+G.Primitive.prototype.init = function(numClones, posData, sizeRange){
+  for(var i = 0; i < numClones; i++){
+    var position = new THREE.Vector3()
+    position.x = G.rf(posData.x - posData.rangeX, posData.x + posData.rangeX)
+    position.y = G.rf(posData.y - posData.rangeY, posData.y + posData.rangeY)
+    position.z = G.rf(posData.z - posData.rangeZ, posData.z + posData.rangeZ)
+    this.create(position, sizeRange);
+  }
 }

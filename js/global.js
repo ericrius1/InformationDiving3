@@ -112,9 +112,10 @@ G.init = function() {
 }
 G.createPrimitives = function(){
   G.primitives['arc'] = new G.Arc();
+  G.primitives['fresnal'] = new G.Fresnal();
   _.each(G.primitiveData, function(data, name){
     if(G.primitives[name]){
-      G.primitives[name].init(data.numClones, data.position, data.sizeRange);
+      G.primitives[name].init(data.numClones, data.positionData, data.sizeRange);
     }
   })
 }

@@ -6,13 +6,6 @@ G.Arc = function() {
 G.Arc.prototype = Object.create(G.Primitive.prototype);
 G.Arc.prototype.constructor = G.Arc;
 
-G.Arc.prototype.init = function(numClones, spawnPoint, sizeRange) {
-
-  for (var i = 0; i < numClones; i++) {
-    this.create(spawnPoint, sizeRange)
-  }
-}
-
 G.Arc.prototype.create = function(spawnPoint, sizeRange) {
   var strandMat = new THREE.ShaderMaterial({
     uniforms: {
@@ -50,13 +43,14 @@ G.Arc.prototype.create = function(spawnPoint, sizeRange) {
   }
   strandGeometry.dynamic = false
   var strand = new THREE.Line(strandGeometry, strandMat)
-  strand.scale.set(G.rf(10, 100), G.rf(10, 100), 1)
   strand.rotation.set(0, G.rf(0, Math.PI * 2), 0)
+  strand.position.copy(spawnPoint)
+  strand.scale.multiplyScalar(G.rf(sizeRange.start, sizeRange.end));
+
   G.scene.add(strand)
 
   strand.material.attributes.opacity.needsUpdate = true
 
-  //To keep things simple, lets grow the strand immediately upon creation. 
   growStrand(strand, 0)
 
   function growStrand(strand, vertexIndex) {
