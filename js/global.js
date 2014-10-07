@@ -50,6 +50,9 @@ VRClient.ready().then(function() {
   console.log('kicked off ready');
 });
 
+
+G.scene = new THREE.Scene();
+G.scene.fog = new THREE.Fog(0x00000, -4000, 80000);
 G.init = function() {
   this.createPrimitives();
   G.renderer = new THREE.WebGLRenderer({
@@ -57,9 +60,6 @@ G.init = function() {
   });
   G.renderer.autoClear = false;
   document.body.appendChild(G.renderer.domElement);
-
-  G.scene = new THREE.Scene();
-  G.scene.fog = new THREE.Fog(0x00000, -4000, 80000);
 
   dolly = new THREE.Object3D();
   dolly.position.set(500, 500, 500);
@@ -97,6 +97,7 @@ G.init = function() {
 }
 G.createPrimitives = function(){
   G.primitives['arc'] = new G.Arc();
+  G.primitives['arc'].spawn()
 }
 
 G.onResize = function() {
@@ -112,7 +113,6 @@ G.animate = function() {
 
   requestAnimationFrame(this.animate);
   if (cameraPath !== undefined) {
-
     // adjust the number after "performance.now() /" to slow down the animation speed.
     var time = (performance.now() / 160000) % 1;
 
