@@ -41,6 +41,13 @@ objLoader.load('models/ID-scene-2.json', function(sceneObj) {
 
 });
 
+G.loader.addLoad();
+$.get('models/sampleData.json', function(data){
+  G.primitiveData = data;
+  console.log(data)
+  G.loader.onLoad();
+})
+
 G.loader.onStart = function() {
   this.init();
   this.animate();

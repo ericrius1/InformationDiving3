@@ -1,0 +1,16 @@
+{
+ 
+ "arc" : {
+   "numClones": 10, 
+   "position":{
+    "x": 0,
+    "y": 0,
+    "z": -100
+   } ,
+   "sizeRange": {
+    "start": 10,
+    "end"  : 100
+   }  
+ }
+
+}
